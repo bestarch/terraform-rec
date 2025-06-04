@@ -9,6 +9,7 @@ variable "prefix" {
 variable "CC_last_four_numbers" {
   description = "Last 4 digit of the CC"
   type        = string
+  sensitive = true
 }
 
 variable "region_primary" {
@@ -40,6 +41,7 @@ variable "eviction_policy" {
 variable "replication" {
   description = "Replication policy for the database"
   type        = bool
+  default = true
 }
 
 variable "data_persistence" {
@@ -50,6 +52,7 @@ variable "data_persistence" {
 variable "support_oss_cluster_api" {
   description = "OSS cluster policy for the database"
   type        = bool
+  default = false
 }
 
 variable "enable_tls" {
@@ -61,4 +64,51 @@ variable "password" {
   description = "Default password to connect to the database"
   type        = string
   sensitive = true
+}
+
+variable "is_rof" {
+  description = "Store on RAM or Flash"
+  type        = bool
+  default     = false
+}
+
+variable "payload_size" {
+  description = "Payload size of each item in bytes"
+  type        = number
+  default = 1000
+}
+
+variable "application_vpc" {
+  description = "VPC where application is deployed or from where it will connect to Redis"
+  type        = string
+  sensitive = true
+}
+
+variable "application_subnet" {
+  description = "Subnet where application is deployed or from where it will connect to Redis"
+  type        = string
+  sensitive = true
+}
+
+variable test_vm_type {
+  description = "Type of the test VM to be created"
+  type        = string
+  default     = "c6a.8xlarge"
+}
+
+variable "key_pair_name" {
+  description = "SSH Key pair name for the test VM"
+  type        = string
+  sensitive = true
+}
+
+variable "aws_account_id" {
+  description = "AWS account ID for peering connection"
+  type        = string
+  sensitive = true
+}
+
+variable "route_table_name" {
+  description = "Name of the route table to be used for peering"
+  type        = string
 }

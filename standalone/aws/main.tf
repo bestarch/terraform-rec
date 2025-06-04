@@ -2,7 +2,7 @@ terraform {
   required_providers {
     rediscloud = {
       source = "RedisLabs/rediscloud"
-      version = "2.0.0"
+      version = "2.1.4"
     }
     random = {
       source  = "hashicorp/random"
@@ -27,16 +27,16 @@ data "rediscloud_payment_method" "card" {
   last_four_numbers = var.CC_last_four_numbers
 }
 
-resource "rediscloud_subscription" "subscription_pro_standard" {
+resource "rediscloud_subscription" "rec_subscription" {
      name = "${var.prefix}-sub-${random_string.suffix.result}"
 
      # If you want to pay with a marketplace account, replace this line with payment_method = 'marketplace'.
      payment_method_id = data.rediscloud_payment_method.card.id 
-     memory_storage = "ram"
+     memory_storage = var.is_rof ? "ram-and-flash" : "ram"
      redis_version  = "7.4"
 
      cloud_provider {
-             provider = "GCP"
+             provider = "AWS"
              region {
                 region = var.region_primary
                 multiple_availability_zones  = true
@@ -51,7 +51,6 @@ resource "rediscloud_subscription" "subscription_pro_standard" {
         throughput_measurement_by = "operations-per-second"
         throughput_measurement_value = var.throughput
         support_oss_cluster_api = var.support_oss_cluster_api
-        modules = ["RedisJSON", "RediSearch"]
      }
 
      maintenance_windows {
@@ -65,7 +64,7 @@ resource "rediscloud_subscription" "subscription_pro_standard" {
 
 // The primary database to provision
 resource "rediscloud_subscription_database" "rec-database" {
-    subscription_id = rediscloud_subscription.subscription_pro_standard.id
+    subscription_id = rediscloud_subscription.rec_subscription.id
     name = "${var.prefix}-db-${random_string.suffix.result}"
     dataset_size_in_gb = var.dataset_size
     data_persistence = var.data_persistence
@@ -76,15 +75,14 @@ resource "rediscloud_subscription_database" "rec-database" {
     support_oss_cluster_api = var.support_oss_cluster_api
     password = var.password
     enable_tls = var.enable_tls
+    average_item_size_in_bytes = var.is_rof ? var.payload_size : null
 
-    modules = [
-        {
-          name = "RedisJSON"
-        },
-        {
-          name = "RediSearch"
-        }
-    ]
+    dynamic "modules" {
+      for_each = var.is_rof ? [] : [{ name = "RedisJSON" },{ name = "RediSearch" }]
+      content {
+        name = modules.value.name
+      }
+    }
 
     tags = {
       "owner" = var.prefix
