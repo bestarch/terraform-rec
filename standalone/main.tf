@@ -90,36 +90,3 @@ resource "rediscloud_subscription_database" "rec-database" {
       "owner" = var.prefix
     }
 }
-
-# resource "rediscloud_active_active_subscription" "subscription-aa" {
-#   name = "${var.prefix}-aa-sub-${random_string.suffix.result}"
-#   payment_method_id = data.rediscloud_payment_method.card.id 
-#   cloud_provider = "GCP"
-
-#   creation_plan {
-#     memory_limit_in_gb = var.dataset_size
-#     quantity = 1
-#     modules = ["RedisJSON", "RediSearch"]
-#     region {
-#       region = var.region_primary
-#       networking_deployment_cidr = var.deployment_cidr_primary
-#       write_operations_per_second = var.write_ops_primary
-#       read_operations_per_second = var.read_ops_primary
-#     }
-#     region {
-#       region = var.region_secondary
-#       networking_deployment_cidr = var.deployment_cidr_secondary
-#       write_operations_per_second = var.write_ops_secondary
-#       read_operations_per_second = var.read_ops_secondary
-#     }
-#   }
-
-#   maintenance_windows {
-#     mode = "automatic"
-#   }
-
-#    depends_on = [
-#     random_string.suffix
-#    ]   
-
-# }
