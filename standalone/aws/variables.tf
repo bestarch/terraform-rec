@@ -15,7 +15,7 @@ variable "CC_last_four_numbers" {
 variable "region_primary" {
   description = "Primary region where Redis is deployed"
   type        = string
-  default = "asia-south1"
+  default = "ap-south-1"
 }
 
 variable "deployment_cidr_primary" {
@@ -78,18 +78,6 @@ variable "payload_size" {
   default = 1000
 }
 
-variable "application_vpc" {
-  description = "VPC where application is deployed or from where it will connect to Redis"
-  type        = string
-  sensitive = true
-}
-
-variable "application_subnet" {
-  description = "Subnet where application is deployed or from where it will connect to Redis"
-  type        = string
-  sensitive = true
-}
-
 variable test_vm_type {
   description = "Type of the test VM to be created"
   type        = string
@@ -108,7 +96,38 @@ variable "aws_account_id" {
   sensitive = true
 }
 
-variable "route_table_name" {
-  description = "Name of the route table to be used for peering"
-  type        = string
+variable "create_test_vm" {
+  description = "Setting to create a test VM with peering cnnection to Redis"
+  type        = bool
+  default     = false
 }
+
+variable "application_vpc_cidr" {
+  description = "CIDR block for the application VPC"
+  type        = string
+  default     = "11.1.0.0/16"
+}
+
+variable "application_subnet_cidr" {
+  description = "CIDR block for the application subnet"
+  type        = string
+  default     = "11.1.0.0/20"
+}
+
+variable "aws_access_key" {
+  description = "AWS access key"
+  type        = string
+  sensitive = true
+}
+
+variable "aws_secret_key" {
+  description = "AWS secret key"
+  type        = string
+  sensitive = true
+}
+
+variable "availability_zone" {
+  description = "AWS AZ for the VM and subnet"
+  type        = string
+  default     = "ap-south-1a"
+} 
