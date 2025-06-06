@@ -15,7 +15,6 @@ terraform {
   }
 }
 
-
 provider "rediscloud" {
   # Configuration options
 }
