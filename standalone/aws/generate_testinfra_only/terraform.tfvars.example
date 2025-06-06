@@ -1,0 +1,34 @@
+# export REDISCLOUD_SECRET_KEY=S64*************bkxm
+# export REDISCLOUD_ACCESS_KEY=Ar**************azxn
+
+prefix = "abhi"
+CC_last_four_numbers = "XXXX"
+region_primary = "ap-south-1"
+availability_zone = "ap-south-1a"
+deployment_cidr_primary = "10.1.0.0/24"
+dataset_size = 1
+throughput = 1000
+password = "admin"
+
+eviction_policy = "volatile-lru"
+replication = false
+enable_tls = false
+data_persistence = "aof-every-write"
+support_oss_cluster_api = true
+is_rof = false
+payload_size = 50000 #50KB
+
+##### Settings for test VM
+aws_access_key = "*****************"
+aws_secret_key = "*****************"
+create_test_vm = true
+test_vm_type = "c6a.8xlarge"
+key_pair_name = "****************"
+aws_account_id = "****************"
+application_vpc_cidr = "11.1.0.0/16"
+application_subnet_cidr = "11.1.0.0/20"
+
+
+
+
+

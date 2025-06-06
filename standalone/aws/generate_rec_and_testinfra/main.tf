@@ -46,7 +46,7 @@ resource "rediscloud_subscription" "rec_subscription" {
 
   cloud_provider {
     provider = "AWS"
-    cloud_account_id = data.rediscloud_cloud_account.rlabs_cloud_account.id
+    #cloud_account_id = data.rediscloud_cloud_account.rlabs_cloud_account.id
     region {
       region = var.region_primary
       multiple_availability_zones  = true
