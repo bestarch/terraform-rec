@@ -35,3 +35,8 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+standalone/aws/.DS_Store
+standalone/.DS_Store
+standalone/aws/.DS_Store
+standalone/aws/REC_AND_TEST_INFRA/.terraform.lock.hcl
+standalone/aws/TEST_INFRA_ONLY/.terraform.lock.hcl
