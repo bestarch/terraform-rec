@@ -2,7 +2,7 @@ terraform {
   required_providers {
     rediscloud = {
       source = "RedisLabs/rediscloud"
-      version = "2.1.4"
+      version = "2.10.4"
     }
     random = {
       source  = "hashicorp/random"
@@ -35,7 +35,7 @@ resource "rediscloud_active_active_subscription" "subscription-aa" {
   creation_plan {
     dataset_size_in_gb = var.dataset_size
     quantity = 1
-    modules = ["RedisJSON", "RediSearch"]
+    # modules = ["RedisJSON", "RediSearch"]
     region {
       region = var.region_primary
       networking_deployment_cidr = var.deployment_cidr_primary
@@ -72,7 +72,7 @@ resource "rediscloud_active_active_subscription_database" "database-resource" {
     #   value = 1
     # }
 
-    global_modules = ["RedisJSON", "RediSearch"]
+    # global_modules = ["RedisJSON", "RediSearch"]
 
     override_region {
       name = "${var.prefix}-${var.region_primary}"
