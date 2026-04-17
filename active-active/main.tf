@@ -60,7 +60,7 @@ resource "rediscloud_active_active_subscription" "subscription-aa" {
 
 }
 
-resource "rediscloud_active_active_subscription_database" "database-resource" {
+resource "rediscloud_active_active_subscription_database" "database_resource" {
     subscription_id = rediscloud_active_active_subscription.subscription-aa.id
     name = "${var.prefix}-aa-sub-${random_string.suffix.result}"
     dataset_size_in_gb = var.dataset_size
@@ -75,12 +75,12 @@ resource "rediscloud_active_active_subscription_database" "database-resource" {
     # global_modules = ["RedisJSON", "RediSearch"]
 
     override_region {
-      name = "${var.prefix}-${var.region_primary}"
+      name = "${var.region_primary}"
       #override_global_source_ips = ["192.10.0.0/16"]
     }
 
     override_region {
-      name = "${var.prefix}-${var.region_secondary}"
+      name = "${var.region_secondary}"
       #override_global_data_persistence = "none"
       #override_global_password = "region-specific-password"
       # override_global_alert {
@@ -102,8 +102,8 @@ resource "rediscloud_active_active_subscription_regions" "regions-resource" {
       region = var.region_primary
       networking_deployment_cidr = var.deployment_cidr_primary
       database {
-          database_id = rediscloud_active_active_subscription_database.database-resource.db_id
-          database_name = rediscloud_active_active_subscription_database.database-resource.name
+          database_id = rediscloud_active_active_subscription_database.database_resource.db_id
+          database_name = rediscloud_active_active_subscription_database.database_resource.name
           local_write_operations_per_second = var.write_ops_primary
           local_read_operations_per_second = var.read_ops_primary
       }
@@ -113,8 +113,8 @@ resource "rediscloud_active_active_subscription_regions" "regions-resource" {
       networking_deployment_cidr = var.deployment_cidr_secondary
       #local_resp_version = "resp2"
       database {
-          database_id = rediscloud_active_active_subscription_database.database-resource.db_id
-          database_name = rediscloud_active_active_subscription_database.database-resource.name
+          database_id = rediscloud_active_active_subscription_database.database_resource.db_id
+          database_name = rediscloud_active_active_subscription_database.database_resource.name
           local_write_operations_per_second = var.write_ops_secondary
           local_read_operations_per_second = var.read_ops_secondary
       }
